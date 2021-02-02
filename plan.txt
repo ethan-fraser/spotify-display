@@ -1,0 +1,23 @@
+Spotify Display
+
+Display album art, song title, artist, as well as song progress on a small display powered by a raspberry pi.
+
+Interfaces with Spotify API using Python to get information about your music. Has a frontend powered by NodeJS.
+
+The Python backend retrieves information about the currently playing song once a second. It stores this information in an appropriately arranged JSON file which is written to the disk. The JavaScript program reads this JSON file and uses the information within to build a frontend.
+This information is in the following format:
+
+{
+  "title": "Diamond Veins (feat. Sarah Rebecca)",
+  "artist": "French 79",
+  "duration_ms": 420120,
+  "progress_ms": 32888,
+  "art": {
+      width: 600,
+      height: 600,
+      url: "https://i.scdn.co/image/ab77838d0000be022cds"
+  }
+  "is_playing": true
+}
+
+needs a default screen for when no music is playing
