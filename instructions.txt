@@ -2,7 +2,7 @@
 pip3 install spotipy
 
 2. run the server with
-python get_sporify_data.py <spotify username>
+python get_spotify_data.py <spotify username>
 
 3. assuming no errors so far, open index.html in a browser.
 press F12 to open the dev tools and click the Console tab.

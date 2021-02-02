@@ -2,7 +2,7 @@ Spotify Display
 
 Display album art, song title, artist, as well as song progress on a small display powered by a raspberry pi.
 
-Interfaces with Spotify API using Python to get information about your music. Has a frontend powered by NodeJS.
+Interfaces with Spotify API using Python to get information about your music. Has a frontend powered by Vanilla JS.
 
 The Python backend retrieves information about the currently playing song once a second. It stores this information in an appropriately arranged JSON file which is written to the disk. The JavaScript program reads this JSON file and uses the information within to build a frontend.
 This information is in the following format:
