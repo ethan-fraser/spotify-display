@@ -37,7 +37,6 @@ def get_token(username):
 
 # get the username from terminal
 username = sys.argv[1]
-scope = "user-read-private user-read-playback-state user-modify-playback-state"
 
 # get auth token and use it to make spotifyObject
 token = get_token(username)
