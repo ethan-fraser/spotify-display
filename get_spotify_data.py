@@ -21,19 +21,14 @@ class Track:
 def get_token(username):
     try:
         token = util.prompt_for_user_token(username,
-            scope = "user-read-private user-read-playback-state user-modify-playback-state",
+            scope = "user-read-playback-state",
             client_id = "f34308de95354355a1cd0c3565659dd8",
             client_secret = "f883197f63654ba0906f2de7ac31be8d",
             redirect_uri = "https://google.co.nz/"
             )
     except (TypeError, AttributeError, JSONDecodeError):
         os.remove(f".cache-{username}")
-        token = util.prompt_for_user_token(username,
-            scope = "user-read-private user-read-playback-state user-modify-playback-state",
-            client_id = "f34308de95354355a1cd0c3565659dd8",
-            client_secret = "f883197f63654ba0906f2de7ac31be8d",
-            redirect_uri = "https://google.co.nz/"
-        )
+        return get_token(username)
     return token
 
 
