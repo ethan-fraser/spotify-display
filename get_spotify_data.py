@@ -50,6 +50,8 @@ while True:
             if device['is_active']:
                 device_name = device['name']
         title = track['item']['name']
+        if len(title) >= 36:
+            title = title[:36] + "..."
         artist = track['item']['artists'][0]['name']
         duration_ms = track['item']['duration_ms']
         progress_ms = track['progress_ms']
@@ -61,6 +63,7 @@ while True:
         track = Track(device_name, title, artist, duration_ms, progress_ms, art, is_playing)
         track = json.dumps(track.__dict__)
     except (NameError, TypeError, HTTPError):
+        print("prolly ratelimiting")
         spotifyObject = spotipy.Spotify(auth=get_token(username))
         track = None
 
@@ -74,4 +77,4 @@ while True:
     else:
         print('nothing playing')
 
-    time.sleep(1)
+    time.sleep(0.3)
