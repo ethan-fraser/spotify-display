@@ -24,7 +24,7 @@ def get_token(username):
             client_secret = "f883197f63654ba0906f2de7ac31be8d",
             redirect_uri = "https://google.co.nz/"
             )
-    except (AttributeError, JSONDecodeError):
+    except (TypeError, AttributeError, JSONDecodeError):
         os.remove(f".cache-{username}")
         token = util.prompt_for_user_token(username,
             scope = "user-read-private user-read-playback-state user-modify-playback-state",
@@ -52,7 +52,11 @@ while True:
         artist = track['item']['artists'][0]['name']
         duration_ms = track['item']['duration_ms']
         progress_ms = track['progress_ms']
-        art = track['item']['album']['images'][1]
+        try:
+            art = track['item']['album']['images'][1]
+        except IndexError:
+            print(track)
+            art = None
         is_playing = track['is_playing']
         track = Track(title, artist, duration_ms, progress_ms, art, is_playing)
         track = json.dumps(track.__dict__)
@@ -65,5 +69,8 @@ while True:
             data.seek(0)
             data.write(track)
             data.truncate()
+        print(track)
+    else:
+        print('nothing playing')
 
     time.sleep(1)

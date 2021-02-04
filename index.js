@@ -15,11 +15,17 @@ async function main(){
         });
         await sleep(1000);
 
-        // enter data in webpage
+        // enter data in webpage, accounting for default artwork for local songs
         artimg = document.getElementById("artimg");
-        artimg.width = data['art']['width'];
-        artimg.height = data['art']['height'];
-        artimg.src = data['art']['url'];
+        if (data['art'] !=  null) {
+            artimg.width = data['art']['width'];
+            artimg.height = data['art']['height'];
+            artimg.src = data['art']['url'];
+        } else {
+            artimg.width = 300;
+            artimg.height = 300;
+            artimg.src = "default.jpg"
+        }
 
         titlelabel = document.getElementById("titlelabel");
         titlelabel.innerHTML = data['title'];

@@ -1,0 +1,46 @@
+html, body {
+    /*background-image: linear-gradient(180deg, #1e1e1e, #323232);*/
+    background-color: #1e1e1e;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: white;
+}
+
+#main {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+#artdiv {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+#artimg {
+    align-self: center;
+}
+
+#songinfodiv {
+    flex: .9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+span {
+    padding-right: 40px;
+}
+
+#titlelabel {
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#artistlabel {
+    font-size: 36px;
+}
