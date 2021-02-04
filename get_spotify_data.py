@@ -18,27 +18,21 @@ class Track:
         self.art = art
         self.is_playing = is_playing
 
-def get_token(username):
-    try:
-        token = util.prompt_for_user_token(username,
-            scope = "user-read-playback-state",
-            client_id = "f34308de95354355a1cd0c3565659dd8",
-            client_secret = "f883197f63654ba0906f2de7ac31be8d",
-            redirect_uri = "https://google.co.nz/"
-            )
-    except (TypeError, AttributeError, JSONDecodeError):
-        os.remove(f".cache-{username}")
-        return get_token(username)
-    return token
-
-
 # get the username from terminal
 username = sys.argv[1]
 
-while True:
+# authorize
+spotifyObject = spotipy.Spotify(auth_manager=spotipy.SpotifyOAuth(
+    "f34308de95354355a1cd0c3565659dd8",
+    "f883197f63654ba0906f2de7ac31be8d",
+    "https://google.co.nz/",
+    scope="user-read-playback-state"
+    ))
 
-    # get track info
+while True:
+    
     try:
+        # get track info
         track = spotifyObject.current_user_playing_track()
         devices = spotifyObject.devices()
         for device in devices['devices']:
@@ -58,18 +52,16 @@ while True:
         track = Track(device_name, title, artist, duration_ms, progress_ms, art, is_playing)
         track = json.dumps(track.__dict__)
     except (NameError, TypeError, HTTPError):
-        print("prolly ratelimiting")
-        spotifyObject = spotipy.Spotify(auth=get_token(username))
         track = None
 
     # write data to disk
-    if track:
-        with open("data.json", "w") as data:
-            data.seek(0)
+    with open("data.json", "w") as data:
+        data.seek(0)
+        if track:
             data.write(track)
-            data.truncate()
-        print(track)
-    else:
-        print('nothing playing')
+        else:
+            data.write('{"error": "Nothing being played.", "errorno": "1"}')
+        data.truncate()
+    print(track)
 
     time.sleep(0.3)
