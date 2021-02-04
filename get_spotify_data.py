@@ -6,9 +6,11 @@ import spotipy
 import webbrowser
 import spotipy.util as util
 from json.decoder import JSONDecodeError
+from requests import HTTPError
 
 class Track:
-    def __init__(self, title, artist, duration_ms, progress_ms, art, is_playing):
+    def __init__(self, device_name, title, artist, duration_ms, progress_ms, art, is_playing):
+        self.device_name = device_name
         self.title = title
         self.artist = artist
         self.duration_ms = duration_ms
@@ -38,16 +40,15 @@ def get_token(username):
 # get the username from terminal
 username = sys.argv[1]
 
-# get auth token and use it to make spotifyObject
-token = get_token(username)
-
-spotifyObject = spotipy.Spotify(auth=token)
-
 while True:
 
     # get track info
-    track = spotifyObject.current_user_playing_track()
     try:
+        track = spotifyObject.current_user_playing_track()
+        devices = spotifyObject.devices()
+        for device in devices['devices']:
+            if device['is_active']:
+                device_name = device['name']
         title = track['item']['name']
         artist = track['item']['artists'][0]['name']
         duration_ms = track['item']['duration_ms']
@@ -55,12 +56,12 @@ while True:
         try:
             art = track['item']['album']['images'][1]
         except IndexError:
-            print(track)
             art = None
         is_playing = track['is_playing']
-        track = Track(title, artist, duration_ms, progress_ms, art, is_playing)
+        track = Track(device_name, title, artist, duration_ms, progress_ms, art, is_playing)
         track = json.dumps(track.__dict__)
-    except TypeError:
+    except (NameError, TypeError, HTTPError):
+        spotifyObject = spotipy.Spotify(auth=get_token(username))
         track = None
 
     # write data to disk

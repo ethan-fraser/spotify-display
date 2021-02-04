@@ -31,7 +31,7 @@ html, body {
     justify-content: center;
 }
 
-span {
+span#titlelabel, span#artistlabel, #devicediv {
     padding-right: 40px;
 }
 
@@ -44,3 +44,37 @@ span {
 #artistlabel {
     font-size: 36px;
 }
+
+#devicediv {
+    margin-bottom: 20px;
+}
+
+#devicenamelabel {
+    margin-left: 5px;
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: lighter;
+    font-style: normal;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    color: rgb(90, 187, 98);
+    vertical-align: bottom;
+  
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+  
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }

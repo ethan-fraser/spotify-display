@@ -30,10 +30,13 @@ async function main(){
         titlelabel = document.getElementById("titlelabel");
         titlelabel.innerHTML = data['title'];
 
-        artistlabel = document.getElementById("artistlabel")
+        artistlabel = document.getElementById("artistlabel");
         artistlabel.innerHTML = data['artist'];
-    }
+        
+        devicenamelabel = document.getElementById("devicenamelabel");
+        devicenamelabel.innerHTML = data['device_name']
 
+    }
 }
 
 main()

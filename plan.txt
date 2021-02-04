@@ -8,6 +8,7 @@ The Python backend retrieves information about the currently playing song once a
 This information is in the following format:
 
 {
+  "device_name": "GM1913"
   "title": "Diamond Veins (feat. Sarah Rebecca)",
   "artist": "French 79",
   "duration_ms": 420120,
