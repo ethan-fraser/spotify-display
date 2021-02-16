@@ -2,7 +2,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function convertMillisecondsTo(ms) {
+function convertMsToString(ms) {
     var sec = Math.floor(ms / 1000);
     var hours = Math.floor(sec / 3600);
     var minutes = Math.floor((sec - (hours * 3600)) / 60);
@@ -53,8 +53,8 @@ async function main(){
 
             let progress_ms = data['progress_ms'];
             let duration_ms = data['duration_ms'];
-            document.getElementById("progresstimelabel").innerHTML = convertMillisecondsTo(progress_ms);
-            document.getElementById("songlengthlabel").innerHTML = convertMillisecondsTo(duration_ms);
+            document.getElementById("progresstimelabel").innerHTML = convertMsToString(progress_ms);
+            document.getElementById("songlengthlabel").innerHTML = convertMsToString(duration_ms);
             document.getElementById("progressindicator").style.width = (progress_ms / duration_ms) * 700 + "px";
         });
 

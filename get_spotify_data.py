@@ -4,6 +4,7 @@ import time
 import json
 import spotipy
 import webbrowser
+import time
 import spotipy.util as util
 from json.decoder import JSONDecodeError
 from requests import HTTPError
@@ -29,39 +30,49 @@ spotifyObject = spotipy.Spotify(auth_manager=spotipy.SpotifyOAuth(
     scope="user-read-playback-state"
     ))
 
-while True:
-    
-    try:
-        # get track info
-        track = spotifyObject.current_user_playing_track()
-        devices = spotifyObject.devices()
-        for device in devices['devices']:
-            if device['is_active']:
-                device_name = device['name']
-        title = track['item']['name']
-        if len(title) >= 36:
-            title = title[:36] + "..."
-        artist = track['item']['artists'][0]['name']
-        duration_ms = track['item']['duration_ms']
-        progress_ms = track['progress_ms']
+
+def main_loop():
+    MAX_TITLE_LENGTH = 36
+    TIME_TO_SLEEP = 0.3
+    TIME_UNTIL_TIMEOUT = 300
+    current_time = 0
+    t0 = time.time()
+    while current_time < TIME_UNTIL_TIMEOUT:
+        current_time += TIME_TO_SLEEP
         try:
-            art = track['item']['album']['images'][1]
-        except IndexError:
-            art = None
-        is_playing = track['is_playing']
-        track = Track(device_name, title, artist, duration_ms, progress_ms, art, is_playing)
-        track = json.dumps(track.__dict__)
-    except (NameError, TypeError, HTTPError):
-        track = None
+            # get track info
+            track = spotifyObject.current_user_playing_track()
+            devices = spotifyObject.devices()
+            for device in devices['devices']:
+                if device['is_active']:
+                    device_name = device['name']
+            title = track['item']['name']
+            if len(title) >= MAX_TITLE_LENGTH:
+                title = title[:MAX_TITLE_LENGTH] + "..."
+            artist = track['item']['artists'][0]['name']
+            duration_ms = track['item']['duration_ms']
+            progress_ms = track['progress_ms']
+            try:
+                art = track['item']['album']['images'][1]
+            except IndexError:
+                art = None
+            is_playing = track['is_playing']
+            track = Track(device_name, title, artist, duration_ms, progress_ms, art, is_playing)
+            track = json.dumps(track.__dict__)
+        except (NameError, TypeError, HTTPError):
+            track = None
 
-    # write data to disk
-    with open("data.json", "w") as data:
-        data.seek(0)
-        if track:
-            data.write(track)
-        else:
-            data.write('{"error": "Nothing being played.", "errorno": "1"}')
-        data.truncate()
-    print(track)
+        # write data to disk
+        with open("data.json", "w") as data:
+            data.seek(0)
+            if track:
+                data.write(track)
+            else:
+                data.write('{"error": "Nothing being played.", "errorno": "1"}')
+            data.truncate()
 
-    time.sleep(0.3)
+        time.sleep(TIME_TO_SLEEP)
+    print(f"System timed out. ({ time.time() - t0 } seconds elapsed)")
+
+if __name__ == "__main__":
+    main_loop()

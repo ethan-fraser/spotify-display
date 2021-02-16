@@ -22,3 +22,4 @@ This information is in the following format:
 }
 
 needs a default screen for when no music is playing
+needs the ability to log into another account dynamically
