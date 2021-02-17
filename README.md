@@ -14,4 +14,5 @@ Uses a Python backend to interface with the Spotify API using the Spotipy Python
 
 4. play music on spotify using the account you used to run the server... the info should appear in the browser.
 
+## Preview
 ![preview](./preview.png)
