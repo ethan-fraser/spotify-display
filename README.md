@@ -12,7 +12,7 @@ Uses a Python backend to interface with the Spotify API using the Spotipy Python
 
 3. Open index.html in a browser
 
-4. play music on spotify using the account you used to run the server... the info should appear in the browser.
+4. Play music on Spotify using the account you used to run the server... the info should appear in the browser.
 
 ## Preview
 ![preview](./preview.png)
